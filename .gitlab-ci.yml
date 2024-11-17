@@ -7,16 +7,24 @@ build_job:
   stage: build
   script:
     - echo "Building the project..."
-    - # Add your build commands here
+    - mkdir dist
+    - echo "Build output" > dist/output.txt
+  artifacts:
+    paths:
+      - dist/
 
 test_job:
   stage: test
   script:
     - echo "Running tests..."
-    - # Add your test commands here
+    - cat dist/output.txt
+  dependencies:
+    - build_job
 
 deploy_job:
   stage: deploy
   script:
     - echo "Deploying the project..."
-    - # Add your deployment commands here
+    - cat dist/output.txt
+  dependencies:
+    - build_job
